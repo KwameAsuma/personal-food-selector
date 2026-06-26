@@ -29,7 +29,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }: AuthModal
     setError(null);
 
     // Format the name into a dummy email for Supabase Auth
-    const formattedEmail = `${name.toLowerCase().replace(/[^a-z0-9]/g, '')}@app.local`;
+    const formattedEmail = `${name.toLowerCase().replace(/[^a-z0-9]/g, '')}@bitedecide.com`;
 
     try {
       if (isLogin) {

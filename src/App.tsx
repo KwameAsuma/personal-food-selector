@@ -102,9 +102,12 @@ export default function App() {
 
   const savePlateToSupabase = async () => {
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not logged in");
+
       const plateName = `Order on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
       const { error } = await supabase.from('saved_plates').insert({
-        user_id: sessionUser?.id,
+        user_id: user.id,
         name: plateName,
         meals: currentPlate
       });
