@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { supabase } from '../lib/supabase';
-import { User, Lock, ArrowRight, Loader2, X } from 'lucide-react';
+import { User, Lock, ArrowRight, Loader2, X, Eye, EyeOff } from 'lucide-react';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -10,9 +10,10 @@ interface AuthModalProps {
 }
 
 export default function AuthModal({ isOpen, onClose, onLoginSuccess }: AuthModalProps) {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false); // Default to Sign Up
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -54,7 +55,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }: AuthModal
       console.error("Auth error:", err);
       // Simplify error message for the user
       if (err.message.includes("Invalid login")) {
-        setError("Incorrect name or password. Try again or sign up.");
+        setError("Incorrect name or password. If you are new, make sure to click 'Sign up' below!");
       } else if (err.message.includes("already registered")) {
         setError("That name is already taken. Try logging in instead.");
       } else if (err.message.includes("Password should be at least")) {
@@ -69,19 +70,19 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }: AuthModal
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 bg-zinc-900/80 dark:bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="bg-zinc-900 border border-white/10 rounded-3xl p-6 md:p-8 w-full max-w-md shadow-2xl relative overflow-hidden"
+          className="bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-3xl p-6 md:p-8 w-full max-w-md shadow-2xl relative overflow-hidden transition-colors duration-300"
         >
           {/* Ambient background blur */}
           <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none" />
 
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors cursor-pointer z-10"
+            className="absolute top-4 right-4 p-2 rounded-full bg-zinc-50 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors cursor-pointer z-10"
           >
             <X className="w-5 h-5" />
           </button>
@@ -90,7 +91,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }: AuthModal
             <h2 className="text-2xl font-black font-brand text-white tracking-wide">
               {isLogin ? 'Welcome Back' : 'Create Profile'}
             </h2>
-            <p className="text-xs text-zinc-400 mt-2 font-medium">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 font-medium">
               {isLogin 
                 ? 'Enter your name to access your saved plates.' 
                 : 'Choose a name to start saving your custom plates.'}
@@ -117,7 +118,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }: AuthModal
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Kwame"
-                  className="w-full bg-zinc-800 border border-white/5 text-white text-sm rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all placeholder:text-zinc-600"
+                  className="w-full bg-zinc-50 dark:bg-zinc-800 border border-black/5 dark:border-white/5 text-zinc-900 dark:text-white text-sm rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all placeholder:text-zinc-600"
                 />
               </div>
             </div>
@@ -131,12 +132,19 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }: AuthModal
                   <Lock className="w-4 h-4" />
                 </div>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 6 characters"
-                  className="w-full bg-zinc-800 border border-white/5 text-white text-sm rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all placeholder:text-zinc-600"
+                  className="w-full bg-zinc-50 dark:bg-zinc-800 border border-black/5 dark:border-white/5 text-zinc-900 dark:text-white text-sm rounded-xl py-3 pl-10 pr-12 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all placeholder:text-zinc-500 dark:placeholder:text-zinc-500"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
               </div>
             </div>
 
@@ -163,7 +171,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }: AuthModal
                 setIsLogin(!isLogin);
                 setError(null);
               }}
-              className="text-xs text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              className="text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:text-white transition-colors cursor-pointer"
             >
               {isLogin 
                 ? "Don't have a profile yet? Sign up" 

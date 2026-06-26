@@ -135,7 +135,7 @@ export default function App() {
   const filteredFoodItems = FOOD_ITEMS.filter((item) => item.category === activePeriod);
 
   return (
-    <div id="personal-food-selector-app" className="min-h-screen text-zinc-100 flex flex-col font-sans relative overflow-hidden">
+    <div id="personal-food-selector-app" className="min-h-screen text-zinc-900 dark:text-zinc-100 flex flex-col font-sans relative overflow-hidden transition-colors duration-300">
       <KioskHeader
         activePeriod={activePeriod}
         onPeriodChange={(p) => setActivePeriod(p)}
@@ -183,23 +183,23 @@ export default function App() {
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-zinc-900/80 backdrop-blur-xl rounded-[32px] p-6 text-white shadow-2xl relative overflow-hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border border-zinc-800/50"
+                  className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl rounded-[32px] p-6 text-zinc-900 dark:text-white shadow-xl dark:shadow-2xl relative overflow-hidden flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border border-black/5 dark:border-zinc-800/50 transition-colors duration-300"
                 >
                   <div className="relative z-10 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl filter drop-shadow-md">
+                    <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center text-2xl filter drop-shadow-sm dark:drop-shadow-md">
                       {activePeriod === 'breakfast' && '🍳'}
                       {activePeriod === 'lunch' && '🍚'}
                       {activePeriod === 'dinner' && '🍲'}
                       {activePeriod === 'snacks' && '🍕'}
                     </div>
                     <div>
-                      <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-widest block font-mono">
+                      <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-widest block font-mono">
                         Active Session Menu
                       </span>
-                      <h3 className="font-bold text-lg sm:text-xl capitalize font-brand tracking-wide text-white mt-0.5">
+                      <h3 className="font-bold text-lg sm:text-xl capitalize font-brand tracking-wide text-zinc-900 dark:text-white mt-0.5 transition-colors duration-300">
                         {activePeriod} Selection
                       </h3>
-                      <p className="text-xs text-zinc-200 mt-1 max-w-md leading-relaxed font-medium">
+                      <p className="text-xs text-zinc-600 dark:text-zinc-200 mt-1 max-w-md leading-relaxed font-medium transition-colors duration-300">
                         Configure your recipe with fresh local stews, high-grade proteins (sausages, chicken, fish, eggs) and healthy complements.
                       </p>
                     </div>
@@ -220,11 +220,11 @@ export default function App() {
                   transition={{ delay: 0.4 }}
                   className="glass-panel p-5 rounded-[24px] flex items-start gap-4 shadow-xl"
                 >
-                  <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0 shadow-lg">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0 shadow-sm dark:shadow-lg transition-colors duration-300">
                     <Info className="w-4 h-4" />
                   </div>
-                  <div className="text-xs text-zinc-300 leading-relaxed font-medium font-sans">
-                    <span className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block mb-1 font-mono">Dietary Combinations & Pairing Rules</span>
+                  <div className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-medium font-sans transition-colors duration-300">
+                    <span className="text-[10px] font-bold text-zinc-800 dark:text-zinc-300 uppercase tracking-widest block mb-1 font-mono transition-colors duration-300">Dietary Combinations & Pairing Rules</span>
                     All selections strictly respect customized kitchen rules. Base dishes load matching stews automatically (e.g. Garden Eggs stew, Tomatoes reduction, or Shito green pepper sauce). High-grade proteins like grilled sausages, crisp chicken thighs, fried sardines or spiced gizzards can be layered per selection.
                   </div>
                 </motion.div>

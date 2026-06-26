@@ -226,20 +226,20 @@ export default function MealRandomizer({
   };
 
   return (
-    <div id="meal-randomizer-overlay" className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-      <div className="bg-zinc-900 rounded-[32px] max-w-lg w-full overflow-hidden shadow-2xl border border-white/10 flex flex-col relative max-h-[90vh] animate-scale-up">
+    <div id="meal-randomizer-overlay" className="fixed inset-0 bg-zinc-900/80 dark:bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+      <div className="bg-white dark:bg-zinc-900 rounded-[32px] max-w-lg w-full overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 flex flex-col relative max-h-[90vh] animate-scale-up transition-colors duration-300">
         {/* Header decoration - Sleek dark/emerald green look */}
-        <div className="bg-black/50 p-6 text-white flex items-center justify-between border-b border-white/5">
+        <div className="bg-black/50 p-6 text-white flex items-center justify-between border-b border-black/5 dark:border-white/5">
           <div className="flex items-center gap-3">
-            <Sparkles className="w-5 h-5 text-emerald-400 animate-pulse" />
+            <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400 animate-pulse" />
             <div>
-              <h3 className="font-bold text-zinc-100 text-base sm:text-lg font-brand uppercase tracking-wide">Chef's Choice Roller</h3>
-              <p className="text-[10px] text-zinc-300 font-bold uppercase tracking-wider font-mono">Let BiteDecide build the perfect recipe</p>
+              <h3 className="font-bold text-zinc-900 dark:text-zinc-100 text-base sm:text-lg font-brand uppercase tracking-wide">Chef's Choice Roller</h3>
+              <p className="text-[10px] text-zinc-600 dark:text-zinc-300 font-bold uppercase tracking-wider font-mono">Let BiteDecide build the perfect recipe</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-zinc-200 hover:text-white transition-colors cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform"
+            className="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-zinc-700 dark:text-zinc-200 hover:text-zinc-900 dark:text-white transition-colors cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform"
           >
             <X className="w-4 h-4" />
           </button>
@@ -249,7 +249,7 @@ export default function MealRandomizer({
         <div className="p-6 overflow-y-auto space-y-6 flex-1 font-sans">
           {/* Category Quick Select */}
           <div className="space-y-2.5">
-            <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block font-mono">
+            <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block font-mono">
               Which Category to roll?
             </label>
             <div className="grid grid-cols-4 gap-2">
@@ -260,8 +260,8 @@ export default function MealRandomizer({
                   onClick={() => !isSpinning && setPeriod(p)}
                   className={`py-2.5 rounded-xl border text-[10px] uppercase tracking-wider font-bold transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                     period === p
-                      ? 'border-emerald-500 bg-emerald-500/20 text-emerald-400 font-black shadow-lg'
-                      : 'border-white/5 hover:bg-white/5 text-zinc-200'
+                      ? 'border-emerald-500 bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-black shadow-lg'
+                      : 'border-black/5 dark:border-white/5 hover:bg-white/5 text-zinc-700 dark:text-zinc-200'
                   }`}
                   disabled={isSpinning}
                 >
@@ -272,10 +272,10 @@ export default function MealRandomizer({
           </div>
 
           {/* Slot Machine Display */}
-          <div className="bg-black/60 rounded-2xl p-6 border border-white/10 relative shadow-inner overflow-hidden flex flex-col items-center justify-center min-h-[190px]">
+          <div className="bg-black/60 rounded-2xl p-6 border border-black/10 dark:border-white/10 relative shadow-inner overflow-hidden flex flex-col items-center justify-center min-h-[190px]">
             {/* Slot background lighting strips */}
             <div className="absolute inset-x-0 h-px bg-emerald-500/10 top-1/4 shadow-lg" />
-            <div className="absolute inset-x-0 h-px bg-emerald-500/20 top-2/4 shadow-lg" />
+            <div className="absolute inset-x-0 h-px bg-emerald-100 dark:bg-emerald-500/20 top-2/4 shadow-lg" />
             <div className="absolute inset-x-0 h-px bg-emerald-500/10 top-3/4 shadow-lg" />
 
             <div className="text-center space-y-3 z-10 w-full">
@@ -284,7 +284,7 @@ export default function MealRandomizer({
                 key={spinningBase}
                 initial={{ y: -15, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                className="text-lg sm:text-xl font-bold text-emerald-400 font-brand tracking-wide drop-shadow-lg"
+                className="text-lg sm:text-xl font-bold text-emerald-600 dark:text-emerald-400 font-brand tracking-wide drop-shadow-lg"
               >
                 {spinningBase}
               </motion.div>
@@ -295,7 +295,7 @@ export default function MealRandomizer({
                   key={spinningStew}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="text-xs text-zinc-300 font-semibold font-mono"
+                  className="text-xs text-zinc-600 dark:text-zinc-300 font-semibold font-mono"
                 >
                   {spinningStew}
                 </motion.div>
@@ -304,12 +304,12 @@ export default function MealRandomizer({
               {/* Protein and Sides tickers */}
               <div className="flex flex-wrap justify-center gap-1.5 pt-1">
                 {spinningProteins.map((p, idx) => (
-                  <span key={p + idx} className="text-[10px] bg-white/5 border border-white/10 text-zinc-300 font-bold px-2.5 py-0.5 rounded-full font-mono">
+                  <span key={p + idx} className="text-[10px] bg-white/5 border border-black/10 dark:border-white/10 text-zinc-600 dark:text-zinc-300 font-bold px-2.5 py-0.5 rounded-full font-mono">
                     {p}
                   </span>
                 ))}
                 {spinningSides.map((s, idx) => (
-                  <span key={s + idx} className="text-[10px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold px-2.5 py-0.5 rounded-full font-mono">
+                  <span key={s + idx} className="text-[10px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold px-2.5 py-0.5 rounded-full font-mono">
                     {s}
                   </span>
                 ))}
@@ -319,7 +319,7 @@ export default function MealRandomizer({
             {/* Glowing roll indicator light */}
             <div className="absolute top-4 right-4 flex items-center gap-1.5">
               <span className={`w-2 h-2 rounded-full ${isSpinning ? 'bg-emerald-400 animate-ping' : 'bg-emerald-500 shadow-lg'}`} />
-              <span className="text-[9px] text-zinc-300 font-bold tracking-wider font-mono uppercase">
+              <span className="text-[9px] text-zinc-600 dark:text-zinc-300 font-bold tracking-wider font-mono uppercase">
                 {isSpinning ? 'SPINNING' : 'DECIDED'}
               </span>
             </div>
@@ -333,51 +333,51 @@ export default function MealRandomizer({
               className="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-5 space-y-3.5 shadow-lg"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full font-mono">
+                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full font-mono">
                   🎉 Curated Combo
                 </span>
-                <span className="text-[10px] text-zinc-300 font-bold uppercase tracking-wider font-mono">Roll: #{rollCount}</span>
+                <span className="text-[10px] text-zinc-600 dark:text-zinc-300 font-bold uppercase tracking-wider font-mono">Roll: #{rollCount}</span>
               </div>
 
               <div>
-                <h4 className="font-bold text-zinc-100 text-base flex items-center gap-1.5 font-brand tracking-wide">
+                <h4 className="font-bold text-zinc-900 dark:text-zinc-100 text-base flex items-center gap-1.5 font-brand tracking-wide">
                   <span>{rolledMeal.baseItem.emoji}</span>
                   <span>{rolledMeal.baseItem.name}</span>
                 </h4>
-                <p className="text-zinc-200 text-xs mt-1 leading-relaxed font-medium">
+                <p className="text-zinc-700 dark:text-zinc-200 text-xs mt-1 leading-relaxed font-medium">
                   {rolledMeal.baseItem.description}
                 </p>
               </div>
 
-              <div className="border-t border-emerald-500/20 pt-3 text-xs space-y-1.5 font-medium text-zinc-200">
+              <div className="border-t border-emerald-500/20 pt-3 text-xs space-y-1.5 font-medium text-zinc-700 dark:text-zinc-200">
                 {rolledMeal.spaghettiStyle && (
                   <p>
-                    Style: <strong className="text-zinc-200 capitalize">{rolledMeal.spaghettiStyle}</strong>
+                    Style: <strong className="text-zinc-700 dark:text-zinc-200 capitalize">{rolledMeal.spaghettiStyle}</strong>
                   </p>
                 )}
                 {rolledMeal.selectedStew && (
                   <p>
-                    Stew: <strong className="text-zinc-200">{STEW_OPTIONS.find(s => s.id === rolledMeal.selectedStew)?.name || rolledMeal.selectedStew}</strong>
+                    Stew: <strong className="text-zinc-700 dark:text-zinc-200">{STEW_OPTIONS.find(s => s.id === rolledMeal.selectedStew)?.name || rolledMeal.selectedStew}</strong>
                   </p>
                 )}
                 {rolledMeal.selectedBankuSide && (
                   <p>
-                    Side: <strong className="text-zinc-200 capitalize">{rolledMeal.selectedBankuSide.replace('-', ' ')}</strong>
+                    Side: <strong className="text-zinc-700 dark:text-zinc-200 capitalize">{rolledMeal.selectedBankuSide.replace('-', ' ')}</strong>
                   </p>
                 )}
                 {rolledMeal.selectedProteins && rolledMeal.selectedProteins.length > 0 && (
                   <p>
-                    Proteins: <strong className="text-zinc-200">{rolledMeal.selectedProteins.map(p => PROTEIN_OPTIONS.find(x => x.id === p)?.name || p).join(', ')}</strong>
+                    Proteins: <strong className="text-zinc-700 dark:text-zinc-200">{rolledMeal.selectedProteins.map(p => PROTEIN_OPTIONS.find(x => x.id === p)?.name || p).join(', ')}</strong>
                   </p>
                 )}
                 {rolledMeal.selectedSides && rolledMeal.selectedSides.length > 0 && (
                   <p>
-                    {rolledMeal.baseItem.customizationType === 'snack' ? 'Drink' : 'Sides'}: <strong className="text-zinc-200">{rolledMeal.selectedSides.map(s => SIDE_OPTIONS.find(x => x.id === s)?.name || s).join(', ')}</strong>
+                    {rolledMeal.baseItem.customizationType === 'snack' ? 'Drink' : 'Sides'}: <strong className="text-zinc-700 dark:text-zinc-200">{rolledMeal.selectedSides.map(s => SIDE_OPTIONS.find(x => x.id === s)?.name || s).join(', ')}</strong>
                   </p>
                 )}
                 {rolledMeal.selectedToppings && rolledMeal.selectedToppings.length > 0 && (
                   <p>
-                    Extras: <strong className="text-emerald-400 font-bold">{rolledMeal.selectedToppings.map(t => TOPPING_OPTIONS.find(x => x.id === t)?.name || t).join(', ')}</strong>
+                    Extras: <strong className="text-emerald-600 dark:text-emerald-400 font-bold">{rolledMeal.selectedToppings.map(t => TOPPING_OPTIONS.find(x => x.id === t)?.name || t).join(', ')}</strong>
                   </p>
                 )}
               </div>
@@ -386,14 +386,14 @@ export default function MealRandomizer({
         </div>
 
         {/* Action Panel Footer */}
-        <div className="p-6 bg-zinc-800/50 backdrop-blur-sm border-t border-white/5 flex gap-3 font-sans">
+        <div className="p-6 bg-zinc-50/50 dark:bg-zinc-800/50 backdrop-blur-sm border-t border-black/5 dark:border-white/5 flex gap-3 font-sans">
           <button
             id="re-roll-btn"
             onClick={handleRoll}
             disabled={isSpinning}
-            className="flex-1 py-3.5 border border-white/10 bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 text-zinc-100 font-bold text-xs uppercase tracking-wider rounded-2xl flex items-center justify-center gap-1.5 cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform shadow-sm transition-colors"
+            className="flex-1 py-3.5 border border-black/10 dark:border-white/10 bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 text-zinc-900 dark:text-zinc-100 font-bold text-xs uppercase tracking-wider rounded-2xl flex items-center justify-center gap-1.5 cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform shadow-sm transition-colors"
           >
-            <RefreshCw className={`w-4 h-4 ${isSpinning ? 'animate-spin text-emerald-400' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isSpinning ? 'animate-spin text-emerald-600 dark:text-emerald-400' : ''}`} />
             <span>Roll Again</span>
           </button>
 

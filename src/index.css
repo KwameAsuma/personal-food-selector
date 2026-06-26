@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Lilita+One&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: "Outfit", system-ui, -apple-system, sans-serif;
@@ -15,10 +16,16 @@
 }
 
 body {
-  background-color: #27272a;
-  color: #f5f5f5;
+  background-color: #f8fafc;
+  color: #0f172a;
   font-family: var(--font-sans);
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark body {
+  background-color: #27272a;
+  color: #f5f5f5;
 }
 
 /* Custom scrollbar to keep layout clean and professional for Dark Mode */
@@ -42,15 +49,29 @@ body {
 
 /* Glassmorphism utilities */
 .glass-panel {
-  background: rgba(24, 24, 27, 0.65);
+  background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+}
+
+.dark .glass-panel {
+  background: rgba(24, 24, 27, 0.65);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: none;
 }
 
 .glass-card {
-  background: rgba(39, 39, 42, 0.4);
+  background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+}
+
+.dark .glass-card {
+  background: rgba(39, 39, 42, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: none;
 }

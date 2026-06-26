@@ -260,7 +260,7 @@ export default function CustomizerModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/90 backdrop-blur-xl"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-zinc-900/90 dark:bg-black/90 backdrop-blur-xl"
         >
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
@@ -269,7 +269,7 @@ export default function CustomizerModal({
             className="relative w-[500px] h-[500px] sm:w-[600px] sm:h-[600px] flex items-center justify-center mb-8"
           >
              <motion.div 
-              className="absolute inset-0 rounded-full border-[16px] border-emerald-500/20 shadow-[0_0_100px_rgba(16,185,129,0.3)] overflow-hidden bg-zinc-900"
+              className="absolute inset-0 rounded-full border-[16px] border-emerald-500/20 shadow-[0_0_100px_rgba(16,185,129,0.3)] overflow-hidden bg-white dark:bg-zinc-900 transition-colors duration-300"
               animate={{ rotate: 360 }}
               transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
             >
@@ -283,19 +283,19 @@ export default function CustomizerModal({
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="text-4xl sm:text-6xl font-black text-emerald-400 font-brand tracking-widest drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]"
+            className="text-4xl sm:text-6xl font-black text-emerald-600 dark:text-emerald-400 font-brand tracking-widest drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]"
           >
             DELICIOUS CHOICE!
           </motion.h2>
         </motion.div>
       ) : (
-      <motion.div key="modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} id="customizer-modal-overlay" className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-end">
+      <motion.div key="modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} id="customizer-modal-overlay" className="fixed inset-0 bg-zinc-900/80 dark:bg-black/80 backdrop-blur-sm z-50 flex justify-end">
         {/* Visual Rotating Plate Preview (Desktop Only) */}
         <div className="hidden lg:flex flex-1 items-center justify-center p-12 overflow-hidden relative">
           <div className="relative w-[450px] h-[450px] flex items-center justify-center">
             {/* The Plate Base */}
             <motion.div 
-              className="absolute inset-0 rounded-full border-[12px] border-zinc-800/90 shadow-2xl overflow-hidden bg-zinc-900"
+              className="absolute inset-0 rounded-full border-[12px] border-zinc-800/90 shadow-2xl overflow-hidden bg-white dark:bg-zinc-900 transition-colors duration-300"
               animate={{ rotate: 360 }}
               transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
             >
@@ -320,7 +320,7 @@ export default function CustomizerModal({
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                  className="absolute z-20 text-7xl bg-zinc-800 border-2 border-zinc-700 rounded-full w-28 h-28 flex items-center justify-center shadow-2xl"
+                  className="absolute z-20 text-7xl bg-zinc-50 dark:bg-zinc-800 border-2 border-zinc-300 dark:border-zinc-700 rounded-full w-28 h-28 flex items-center justify-center shadow-2xl"
                   style={{ x, y }}
                 >
                   {emoji}
@@ -346,10 +346,10 @@ export default function CustomizerModal({
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: '100%', opacity: 0.95 }}
           transition={{ type: 'spring', damping: 28, stiffness: 220 }}
-          className="w-full max-w-lg bg-zinc-900 h-full flex flex-col shadow-2xl relative border-l border-white/10 font-sans"
+          className="w-full max-w-lg bg-white dark:bg-zinc-900 h-full flex flex-col shadow-2xl relative border-l border-black/10 dark:border-white/10 font-sans transition-colors duration-300"
         >
           {/* Header Image Background with Elegant Design */}
-          <div className="relative h-44 sm:h-48 bg-zinc-800 flex-shrink-0 overflow-hidden">
+          <div className="relative h-44 sm:h-48 bg-zinc-50 dark:bg-zinc-800 flex-shrink-0 overflow-hidden">
             <img 
               src={meal.imageUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80'} 
               alt={meal.name}
@@ -384,7 +384,7 @@ export default function CustomizerModal({
           </div>
 
           {/* Steps Tab Bar */}
-          <div className="bg-zinc-900 px-6 py-3 border-b border-white/10 flex justify-between items-center text-xs flex-shrink-0">
+          <div className="bg-white dark:bg-zinc-900 px-6 py-3 border-b border-black/10 dark:border-white/10 flex justify-between items-center text-xs flex-shrink-0 transition-colors duration-300">
             {steps.map((s) => (
               <button
                 key={s.number}
@@ -393,11 +393,11 @@ export default function CustomizerModal({
                 className={`flex items-center gap-2 pb-1.5 border-b-2 font-bold transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                   activeStep === s.number
                     ? 'border-emerald-500 text-emerald-600'
-                    : 'border-transparent text-zinc-300 hover:text-zinc-300'
+                    : 'border-transparent text-zinc-600 dark:text-zinc-300 hover:text-zinc-600 dark:text-zinc-300'
                 }`}
               >
                 <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                  activeStep === s.number ? 'bg-emerald-500 text-white shadow-sm' : 'bg-zinc-800 text-zinc-200'
+                  activeStep === s.number ? 'bg-emerald-500 text-white shadow-sm' : 'bg-zinc-50 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200'
                 }`}>
                   {s.number}
                 </span>
@@ -407,7 +407,7 @@ export default function CustomizerModal({
           </div>
 
           {/* Customizer Option Scroll Area */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-zinc-800/50">
+          <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-zinc-50/50 dark:bg-zinc-800/50">
             <AnimatePresence mode="wait">
               {/* --- STEP 1 --- */}
               {activeStep === 1 && (
@@ -423,7 +423,7 @@ export default function CustomizerModal({
                   {isJollof && (
                     <div className="bg-emerald-50 border border-emerald-100 p-5 rounded-2xl space-y-3">
                       <div className="flex items-center gap-2 text-emerald-800">
-                        <Sparkles className="w-5 h-5 text-emerald-500 shrink-0" />
+                        <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-500 shrink-0" />
                         <h4 className="font-bold text-sm">Savory Smoky Jollof</h4>
                       </div>
                       <p className="text-xs text-emerald-800 leading-relaxed font-medium">
@@ -437,7 +437,7 @@ export default function CustomizerModal({
                     <div className="space-y-4">
                       <div className="bg-emerald-50 border border-emerald-100 p-5 rounded-2xl space-y-3">
                         <div className="flex items-center gap-2 text-emerald-800">
-                          <Sparkles className="w-5 h-5 text-emerald-500 shrink-0" />
+                          <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-500 shrink-0" />
                           <h4 className="font-bold text-sm">Fried Yam & Pepper Sauce</h4>
                         </div>
                         <p className="text-xs text-emerald-800 leading-relaxed font-medium">
@@ -450,10 +450,10 @@ export default function CustomizerModal({
                           <span className="text-2xl">🌶️</span>
                           <div>
                             <p className="font-bold text-sm text-emerald-700">Pepper Sauce (Included)</p>
-                            <p className="text-[11px] text-zinc-300 mt-0.5 font-medium">Spicy fresh pepper paste, hot & savory.</p>
+                            <p className="text-[11px] text-zinc-600 dark:text-zinc-300 mt-0.5 font-medium">Spicy fresh pepper paste, hot & savory.</p>
                           </div>
                         </div>
-                        <span className="text-xs font-bold text-emerald-600 bg-zinc-900 border border-emerald-200 px-3 py-1 rounded-full uppercase">
+                        <span className="text-xs font-bold text-emerald-600 bg-white dark:bg-zinc-900 border border-emerald-200 px-3 py-1 rounded-full uppercase transition-colors duration-300">
                           Preselected
                         </span>
                       </div>
@@ -463,8 +463,8 @@ export default function CustomizerModal({
                   {/* Boiled Yam Stew Selection */}
                   {isBoiledYam && (
                     <div className="space-y-3">
-                      <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block">
-                        Select Stew Base <span className="text-emerald-500">*</span>
+                      <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block">
+                        Select Stew Base <span className="text-emerald-600 dark:text-emerald-500">*</span>
                       </label>
                       <div className="grid grid-cols-1 gap-3">
                         {STEW_OPTIONS.filter(s => s.id !== 'pepper_sauce').map((stew) => {
@@ -477,7 +477,7 @@ export default function CustomizerModal({
                               className={`flex items-center justify-between p-4 rounded-2xl border text-left transition-all duration-200 cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                                 isSelected
                                   ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                                  : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                                  : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                               }`}
                             >
                               <div className="flex items-center gap-3">
@@ -486,11 +486,11 @@ export default function CustomizerModal({
                                   <p className={`font-bold text-sm ${isSelected ? 'text-emerald-600' : 'text-[#1A1816]'}`}>
                                     {stew.name}
                                   </p>
-                                  <p className="text-[11px] text-zinc-300 mt-0.5 leading-relaxed font-medium">{stew.description}</p>
+                                  <p className="text-[11px] text-zinc-600 dark:text-zinc-300 mt-0.5 leading-relaxed font-medium">{stew.description}</p>
                                 </div>
                               </div>
                               <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all shrink-0 ${
-                                isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-white/10 bg-zinc-900'
+                                isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900'
                               }`}>
                                 {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                               </div>
@@ -504,8 +504,8 @@ export default function CustomizerModal({
                   {/* Standard Rice/Other Sauce Selection */}
                   {!isFriedYam && !isBoiledYam && (meal.customizationType === 'rice') && (
                     <div className="space-y-3">
-                      <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block">
-                        Select Stew or Sauce Base <span className="text-emerald-500">*</span>
+                      <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block">
+                        Select Stew or Sauce Base <span className="text-emerald-600 dark:text-emerald-500">*</span>
                       </label>
                       <div className="grid grid-cols-1 gap-3">
                         {STEW_OPTIONS.filter(stew => !isJollof || ['tomato_stew', 'pepper_sauce'].includes(stew.id)).map((stew) => {
@@ -518,7 +518,7 @@ export default function CustomizerModal({
                               className={`flex items-center justify-between p-4 rounded-2xl border text-left transition-all duration-200 cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                                 isSelected
                                   ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                                  : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                                  : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                               }`}
                             >
                               <div className="flex items-center gap-3">
@@ -527,11 +527,11 @@ export default function CustomizerModal({
                                   <p className={`font-bold text-sm ${isSelected ? 'text-emerald-600' : 'text-[#1A1816]'}`}>
                                     {stew.name}
                                   </p>
-                                  <p className="text-[11px] text-zinc-300 mt-0.5 leading-relaxed font-medium">{stew.description}</p>
+                                  <p className="text-[11px] text-zinc-600 dark:text-zinc-300 mt-0.5 leading-relaxed font-medium">{stew.description}</p>
                                 </div>
                               </div>
                               <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all shrink-0 ${
-                                isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-white/10 bg-zinc-900'
+                                isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900'
                               }`}>
                                 {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                               </div>
@@ -545,8 +545,8 @@ export default function CustomizerModal({
                   {/* Banku Side choices */}
                   {meal.customizationType === 'banku' && (
                     <div className="space-y-3">
-                      <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block">
-                        Select Soup or Sauce Base <span className="text-emerald-500">*</span>
+                      <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block">
+                        Select Soup or Sauce Base <span className="text-emerald-600 dark:text-emerald-500">*</span>
                       </label>
                       <div className="grid grid-cols-1 gap-3">
                         <button
@@ -555,7 +555,7 @@ export default function CustomizerModal({
                           className={`flex items-center justify-between p-4 rounded-2xl border text-left transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                             selectedBankuSide === 'okro'
                               ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                              : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                              : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                           }`}
                         >
                           <div className="flex items-center gap-3">
@@ -564,11 +564,11 @@ export default function CustomizerModal({
                               <p className={`font-bold text-sm ${selectedBankuSide === 'okro' ? 'text-emerald-600' : 'text-[#1A1816]'}`}>
                                 Okro Stew (Traditional)
                               </p>
-                              <p className="text-[11px] text-zinc-300 mt-0.5 leading-relaxed font-medium">Rich okra, meat, fish and palm oil reduction.</p>
+                              <p className="text-[11px] text-zinc-600 dark:text-zinc-300 mt-0.5 leading-relaxed font-medium">Rich okra, meat, fish and palm oil reduction.</p>
                             </div>
                           </div>
                           <div className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${
-                            selectedBankuSide === 'okro' ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-white/10 bg-zinc-900'
+                            selectedBankuSide === 'okro' ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900'
                           }`}>
                             {selectedBankuSide === 'okro' && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                           </div>
@@ -580,7 +580,7 @@ export default function CustomizerModal({
                           className={`flex items-center justify-between p-4 rounded-2xl border text-left transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                             selectedBankuSide === 'tomato'
                               ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                              : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                              : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                           }`}
                         >
                           <div className="flex items-center gap-3">
@@ -589,11 +589,11 @@ export default function CustomizerModal({
                               <p className={`font-bold text-sm ${selectedBankuSide === 'tomato' ? 'text-emerald-600' : 'text-[#1A1816]'}`}>
                                 Tomatoes Stew
                               </p>
-                              <p className="text-[11px] text-zinc-300 mt-0.5 leading-relaxed font-medium">Savory tomato, onion sauce. Extra meat choices available next.</p>
+                              <p className="text-[11px] text-zinc-600 dark:text-zinc-300 mt-0.5 leading-relaxed font-medium">Savory tomato, onion sauce. Extra meat choices available next.</p>
                             </div>
                           </div>
                           <div className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${
-                            selectedBankuSide === 'tomato' ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-white/10 bg-zinc-900'
+                            selectedBankuSide === 'tomato' ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900'
                           }`}>
                             {selectedBankuSide === 'tomato' && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                           </div>
@@ -605,7 +605,7 @@ export default function CustomizerModal({
                           className={`flex items-center justify-between p-4 rounded-2xl border text-left transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                             selectedBankuSide === 'pepper-sauce'
                               ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                              : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                              : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                           }`}
                         >
                           <div className="flex items-center gap-3">
@@ -614,11 +614,11 @@ export default function CustomizerModal({
                               <p className={`font-bold text-sm ${selectedBankuSide === 'pepper-sauce' ? 'text-emerald-600' : 'text-[#1A1816]'}`}>
                                 Spicy Pepper Sauce
                               </p>
-                              <p className="text-[11px] text-zinc-300 mt-0.5 leading-relaxed font-medium">Spicy green chili/shito with fried proteins next.</p>
+                              <p className="text-[11px] text-zinc-600 dark:text-zinc-300 mt-0.5 leading-relaxed font-medium">Spicy green chili/shito with fried proteins next.</p>
                             </div>
                           </div>
                           <div className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 ${
-                            selectedBankuSide === 'pepper-sauce' ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-white/10 bg-zinc-900'
+                            selectedBankuSide === 'pepper-sauce' ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900'
                           }`}>
                             {selectedBankuSide === 'pepper-sauce' && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                           </div>
@@ -630,8 +630,8 @@ export default function CustomizerModal({
                   {/* Spaghetti Style choices */}
                   {meal.customizationType === 'spaghetti' && (
                     <div className="space-y-3">
-                      <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block">
-                        Spaghetti Cooking Style <span className="text-emerald-500">*</span>
+                      <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block">
+                        Spaghetti Cooking Style <span className="text-emerald-600 dark:text-emerald-500">*</span>
                       </label>
                       <div className="grid grid-cols-2 gap-3">
                         <button
@@ -640,12 +640,12 @@ export default function CustomizerModal({
                           className={`p-4 rounded-2xl border text-center transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                             spaghettiStyle === 'stewed'
                               ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                              : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                              : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                           }`}
                         >
                           <span className="text-2xl block mb-1">🍝</span>
-                          <p className="font-bold text-sm text-zinc-200">Spaghetti & Stew</p>
-                          <p className="text-[10px] text-zinc-300 mt-1">Paired with rich tomatoes stew</p>
+                          <p className="font-bold text-sm text-zinc-700 dark:text-zinc-200">Spaghetti & Stew</p>
+                          <p className="text-[10px] text-zinc-600 dark:text-zinc-300 mt-1">Paired with rich tomatoes stew</p>
                         </button>
 
                         <button
@@ -654,12 +654,12 @@ export default function CustomizerModal({
                           className={`p-4 rounded-2xl border text-center transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                             spaghettiStyle === 'fried'
                               ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                              : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                              : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                           }`}
                         >
                           <span className="text-2xl block mb-1">🍳</span>
-                          <p className="font-bold text-sm text-zinc-200">Fried Spaghetti</p>
-                          <p className="text-[10px] text-zinc-300 mt-1">Stir-fried veggies & sausage</p>
+                          <p className="font-bold text-sm text-zinc-700 dark:text-zinc-200">Fried Spaghetti</p>
+                          <p className="text-[10px] text-zinc-600 dark:text-zinc-300 mt-1">Stir-fried veggies & sausage</p>
                         </button>
                       </div>
                     </div>
@@ -669,7 +669,7 @@ export default function CustomizerModal({
                   {meal.customizationType === 'breakfast' && (
                     <div className="space-y-4">
                       <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl text-xs text-emerald-800 leading-relaxed font-medium flex gap-3">
-                        <Coffee className="w-5 h-5 text-emerald-500 shrink-0" />
+                        <Coffee className="w-5 h-5 text-emerald-600 dark:text-emerald-500 shrink-0" />
                         <div>
                           <strong>Breakfast:</strong> Choose sweeteners or spreads next to customize your healthy start!
                         </div>
@@ -677,7 +677,7 @@ export default function CustomizerModal({
 
                       {filteredToppings.length > 0 && (
                         <div className="space-y-2.5">
-                          <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block">
+                          <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block">
                             Quick Spreads & Porridge Sweeteners
                           </label>
                           <div className="grid grid-cols-2 gap-2.5">
@@ -691,15 +691,15 @@ export default function CustomizerModal({
                                   className={`p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                                     isSelected
                                       ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                                      : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                                      : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                                   }`}
                                 >
-                                  <span className="text-xs font-bold text-zinc-200 flex items-center gap-2">
+                                  <span className="text-xs font-bold text-zinc-700 dark:text-zinc-200 flex items-center gap-2">
                                     <span className="text-xl filter drop-shadow-sm">{topping.emoji}</span>
                                     <span>{topping.name}</span>
                                   </span>
                                   <div className={`w-4 h-4 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
-                                    isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-white/10 bg-zinc-900'
+                                    isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900'
                                   }`}>
                                     {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                                   </div>
@@ -716,7 +716,7 @@ export default function CustomizerModal({
                   {meal.customizationType === 'fries' && (
                     <div className="bg-emerald-50 border border-emerald-100 p-5 rounded-2xl space-y-3">
                       <div className="flex items-center gap-2 text-emerald-800">
-                        <Sparkles className="w-5 h-5 text-emerald-500 shrink-0" />
+                        <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-500 shrink-0" />
                         <h4 className="font-bold text-sm">Crispy Fries</h4>
                       </div>
                       <p className="text-xs text-emerald-800 leading-relaxed font-medium">
@@ -734,7 +734,7 @@ export default function CustomizerModal({
 
                       {filteredToppings.length > 0 ? (
                         <div className="space-y-2.5">
-                          <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block">
+                          <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block">
                             Add Premium Sweeteners & Extras
                           </label>
                           <div className="grid grid-cols-2 gap-2.5">
@@ -748,15 +748,15 @@ export default function CustomizerModal({
                                   className={`p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                                     isSelected
                                       ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                                      : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                                      : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                                   }`}
                                 >
-                                  <span className="text-xs font-bold text-zinc-200 flex items-center gap-2">
+                                  <span className="text-xs font-bold text-zinc-700 dark:text-zinc-200 flex items-center gap-2">
                                     <span className="text-xl filter drop-shadow-sm">{topping.emoji}</span>
                                     <span>{topping.name}</span>
                                   </span>
                                   <div className={`w-4 h-4 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
-                                    isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-white/10 bg-zinc-900'
+                                    isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900'
                                   }`}>
                                     {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                                   </div>
@@ -766,7 +766,7 @@ export default function CustomizerModal({
                           </div>
                         </div>
                       ) : (
-                        <p className="text-xs text-zinc-300 italic font-medium">No specialized toppings needed. Ready to proceed to cold beverage selections!</p>
+                        <p className="text-xs text-zinc-600 dark:text-zinc-300 italic font-medium">No specialized toppings needed. Ready to proceed to cold beverage selections!</p>
                       )}
                     </div>
                   )}
@@ -798,8 +798,8 @@ export default function CustomizerModal({
                   {isSnack ? (
                     <div className="space-y-4">
                       <div>
-                        <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block">
-                          Add a Chilled Beverage <span className="text-zinc-300 font-normal">(Pick multiple options)</span>
+                        <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block">
+                          Add a Chilled Beverage <span className="text-zinc-600 dark:text-zinc-300 font-normal">(Pick multiple options)</span>
                         </label>
                         <p className="text-[10px] text-emerald-700/80 mt-1 font-bold">
                           ★ Complete your snack with a refreshing local or classic soft drink!
@@ -818,15 +818,15 @@ export default function CustomizerModal({
                                 className={`p-4 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                                   isSelected
                                     ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                                    : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                                    : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                                 }`}
                               >
-                                <span className="text-xs font-bold text-zinc-200 flex items-center gap-3">
+                                <span className="text-xs font-bold text-zinc-700 dark:text-zinc-200 flex items-center gap-3">
                                   <span className="text-2xl filter drop-shadow-sm">{drink.emoji}</span>
                                   <span>{drink.name}</span>
                                 </span>
                                 <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors shrink-0 ${
-                                  isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-white/10 bg-zinc-900'
+                                  isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900'
                                 }`}>
                                   {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                                 </div>
@@ -838,7 +838,7 @@ export default function CustomizerModal({
 
                       {/* Custom Prep Notes for Snacks */}
                       <div className="space-y-2 pt-3">
-                        <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block">
+                        <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block">
                           Special Instructions / Preparation
                         </label>
                         <textarea
@@ -846,7 +846,7 @@ export default function CustomizerModal({
                           value={notes}
                           onChange={(e) => setNotes(e.target.value)}
                           placeholder="e.g. make it extra toasted, split in two, chill the drinks..."
-                          className="w-full text-xs p-3.5 rounded-2xl border border-white/10 bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 min-h-[75px] resize-none font-medium text-neutral-700"
+                          className="w-full text-xs p-3.5 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 min-h-[75px] resize-none font-medium text-neutral-700 transition-colors duration-300"
                         />
                       </div>
 
@@ -854,7 +854,7 @@ export default function CustomizerModal({
                         <button
                           id="back-to-step-1"
                           onClick={() => setActiveStep(1)}
-                          className="flex-1 py-3.5 bg-zinc-800 hover:bg-neutral-200 text-neutral-700 font-bold text-xs uppercase tracking-wider rounded-2xl transition-colors cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform"
+                          className="flex-1 py-3.5 bg-zinc-50 dark:bg-zinc-800 hover:bg-neutral-200 text-neutral-700 font-bold text-xs uppercase tracking-wider rounded-2xl transition-colors cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform"
                         >
                           Back
                         </button>
@@ -872,8 +872,8 @@ export default function CustomizerModal({
                     // Standard Meal - Step 2 is Proteins Selection
                     <div className="space-y-4">
                       <div>
-                        <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block">
-                          Choose Protein Add-ons <span className="text-zinc-300 font-normal">(Pick multiple options)</span>
+                        <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block">
+                          Choose Protein Add-ons <span className="text-zinc-600 dark:text-zinc-300 font-normal">(Pick multiple options)</span>
                         </label>
                         <p className="text-[10px] text-emerald-700/80 mt-1 font-bold">
                           {isFriedYam
@@ -894,15 +894,15 @@ export default function CustomizerModal({
                                 className={`p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                                   isSelected
                                     ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                                    : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                                    : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                                 }`}
                               >
-                                <span className="text-xs font-bold text-zinc-200 flex items-center gap-2">
+                                <span className="text-xs font-bold text-zinc-700 dark:text-zinc-200 flex items-center gap-2">
                                   <span className="text-xl filter drop-shadow-sm">{protein.emoji}</span>
                                   <span>{protein.name}</span>
                                 </span>
                                 <div className={`w-4 h-4 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
-                                  isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-white/10 bg-zinc-900'
+                                  isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900'
                                 }`}>
                                   {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                                 </div>
@@ -911,14 +911,14 @@ export default function CustomizerModal({
                           })}
                         </div>
                       ) : (
-                        <p className="text-xs text-zinc-300 italic font-medium">No custom protein options available for this item.</p>
+                        <p className="text-xs text-zinc-600 dark:text-zinc-300 italic font-medium">No custom protein options available for this item.</p>
                       )}
 
                       <div className="flex gap-3 pt-4">
                         <button
                           id="back-to-step-1"
                           onClick={() => setActiveStep(1)}
-                          className="flex-1 py-3.5 bg-zinc-800 hover:bg-neutral-200 text-neutral-700 font-bold text-xs uppercase tracking-wider rounded-2xl transition-colors cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform"
+                          className="flex-1 py-3.5 bg-zinc-50 dark:bg-zinc-800 hover:bg-neutral-200 text-neutral-700 font-bold text-xs uppercase tracking-wider rounded-2xl transition-colors cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform"
                         >
                           Back
                         </button>
@@ -949,7 +949,7 @@ export default function CustomizerModal({
                   {/* Sides section */}
                   {filteredSides.length > 0 && (
                     <div className="space-y-2.5">
-                      <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block">
+                      <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block">
                         Select Sides & Complements
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -963,15 +963,15 @@ export default function CustomizerModal({
                               className={`p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                                 isSelected
                                   ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                                  : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                                  : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                               }`}
                             >
-                              <span className="text-xs font-bold text-zinc-200 flex items-center gap-2">
+                              <span className="text-xs font-bold text-zinc-700 dark:text-zinc-200 flex items-center gap-2">
                                 <span className="text-xl filter drop-shadow-sm">{side.emoji}</span>
                                 <span>{side.name}</span>
                               </span>
                               <div className={`w-4 h-4 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
-                                isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-white/10 bg-zinc-900'
+                                isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900'
                               }`}>
                                 {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                               </div>
@@ -985,7 +985,7 @@ export default function CustomizerModal({
                   {/* Toppings section (Breakfast milk/sugar if not shown on step 1) */}
                   {filteredToppings.length > 0 && meal.customizationType !== 'breakfast' && (
                     <div className="space-y-2.5">
-                      <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block">
+                      <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block">
                         Add Sweeteners, Spreads & Extras
                       </label>
                       <div className="grid grid-cols-2 gap-2.5">
@@ -999,15 +999,15 @@ export default function CustomizerModal({
                               className={`p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform ${
                                 isSelected
                                   ? 'border-emerald-500 bg-emerald-500/5 ring-1 ring-emerald-500/10'
-                                  : 'border-white/10 bg-zinc-900 hover:border-white/10'
+                                  : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 hover:border-black/10 dark:border-white/10'
                               }`}
                             >
-                              <span className="text-xs font-bold text-zinc-200 flex items-center gap-2">
+                              <span className="text-xs font-bold text-zinc-700 dark:text-zinc-200 flex items-center gap-2">
                                 <span className="text-xl filter drop-shadow-sm">{topping.emoji}</span>
                                 <span>{topping.name}</span>
                               </span>
                               <div className={`w-4 h-4 rounded-md border flex items-center justify-center transition-colors shrink-0 ${
-                                isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-white/10 bg-zinc-900'
+                                isSelected ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900'
                               }`}>
                                 {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                               </div>
@@ -1020,7 +1020,7 @@ export default function CustomizerModal({
 
                   {/* Custom Prep Notes */}
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest block">
+                    <label className="text-[10px] font-bold text-zinc-600 dark:text-zinc-300 uppercase tracking-widest block">
                       Cooking Notes / Special Instructions
                     </label>
                     <textarea
@@ -1028,7 +1028,7 @@ export default function CustomizerModal({
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
                       placeholder="e.g. less spicy sauce, crispy fried plantains, slice avocado..."
-                      className="w-full text-xs p-3.5 rounded-2xl border border-white/10 bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 min-h-[75px] resize-none font-medium text-neutral-700"
+                      className="w-full text-xs p-3.5 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 min-h-[75px] resize-none font-medium text-neutral-700 transition-colors duration-300"
                     />
                   </div>
 
@@ -1037,7 +1037,7 @@ export default function CustomizerModal({
                     <button
                       id="back-to-step-2"
                       onClick={() => setActiveStep(2)}
-                      className="flex-1 py-3.5 bg-zinc-800 hover:bg-neutral-200 text-neutral-700 font-bold text-xs uppercase tracking-wider rounded-2xl transition-colors cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform"
+                      className="flex-1 py-3.5 bg-zinc-50 dark:bg-zinc-800 hover:bg-neutral-200 text-neutral-700 font-bold text-xs uppercase tracking-wider rounded-2xl transition-colors cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform"
                     >
                       Back
                     </button>
