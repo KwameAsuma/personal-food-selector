@@ -8,9 +8,10 @@ interface OrderSummaryViewProps {
   cartItems: CustomizedMeal[];
   onBackToMenu: () => void;
   onRemoveItem: (id: string) => void;
+  onFinishOrder: () => void;
 }
 
-export default function OrderSummaryView({ cartItems, onBackToMenu, onRemoveItem }: OrderSummaryViewProps) {
+export default function OrderSummaryView({ cartItems, onBackToMenu, onRemoveItem, onFinishOrder }: OrderSummaryViewProps) {
   const resolveStew = (id?: string) => STEW_OPTIONS.find(s => s.id === id);
   const resolveProtein = (id: string) => PROTEIN_OPTIONS.find(p => p.id === id);
   const resolveSide = (id: string) => SIDE_OPTIONS.find(s => s.id === id);
@@ -192,6 +193,7 @@ export default function OrderSummaryView({ cartItems, onBackToMenu, onRemoveItem
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={onFinishOrder}
             className="px-10 py-5 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-lg uppercase tracking-wider rounded-2xl shadow-xl shadow-emerald-500/20 flex items-center gap-3 cursor-pointer"
           >
             <CheckCircle className="w-6 h-6" />

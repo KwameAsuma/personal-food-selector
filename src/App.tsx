@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Sparkles, Star, Utensils, Info } from 'lucide-react';
+import { Info } from 'lucide-react';
 import KioskHeader from './components/KioskHeader';
 import MenuGrid from './components/MenuGrid';
 import CustomizerModal from './components/CustomizerModal';
 import MealRandomizer from './components/MealRandomizer';
 import OrderSummaryView from './components/OrderSummaryView';
-import { FoodOption, CustomizedMeal, SavedPlate, MealPeriod } from './types';
+import HistoryView from './components/HistoryView';
+import AuthModal from './components/AuthModal';
+import { FoodOption, CustomizedMeal, MealPeriod } from './types';
 import { FOOD_ITEMS } from './data';
+import { supabase } from './lib/supabase';
 
 export default function App() {
-  // 1. Determine default active period based on the current local time of day
   const getDefaultPeriod = (): MealPeriod => {
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 11) return 'breakfast';
@@ -20,31 +22,42 @@ export default function App() {
   };
 
   const [activePeriod, setActivePeriod] = useState<MealPeriod>(getDefaultPeriod());
-  const [currentView, setCurrentView] = useState<'menu' | 'summary'>('menu');
+  const [currentView, setCurrentView] = useState<'menu' | 'summary' | 'history'>('menu');
   const [selectedMealToCustomize, setSelectedMealToCustomize] = useState<FoodOption | null>(null);
   const [editingMeal, setEditingMeal] = useState<CustomizedMeal | null>(null);
   const [currentPlate, setCurrentPlate] = useState<CustomizedMeal[]>([]);
-  const [savedFavorites, setSavedFavorites] = useState<SavedPlate[]>([]);
   const [isRandomizerOpen, setIsRandomizerOpen] = useState<boolean>(false);
+  
+  // Auth state
+  const [sessionUser, setSessionUser] = useState<any>(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isFinishingOrder, setIsFinishingOrder] = useState(false);
 
-  // 2. Load data from localStorage on component mount
+  // Check auth
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setSessionUser(user);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSessionUser(session?.user || null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Load current plate from local storage
   useEffect(() => {
     try {
       const storedPlate = localStorage.getItem('bitedecide_current_plate');
       if (storedPlate) {
         setCurrentPlate(JSON.parse(storedPlate));
       }
-
-      const storedFavorites = localStorage.getItem('bitedecide_favorites');
-      if (storedFavorites) {
-        setSavedFavorites(JSON.parse(storedFavorites));
-      }
     } catch (e) {
       console.error('Failed to load storage data:', e);
     }
   }, []);
 
-  // 3. Save current plate to localStorage when changed
   const updateCurrentPlateState = (newPlate: CustomizedMeal[]) => {
     setCurrentPlate(newPlate);
     try {
@@ -54,15 +67,12 @@ export default function App() {
     }
   };
 
-  // 4. Customizer Add & Modify Handlers
   const handleAddToPlate = (customizedMeal: CustomizedMeal) => {
     const exists = currentPlate.some(m => m.id === customizedMeal.id);
     if (exists) {
-      // Modify existing
       const updated = currentPlate.map(m => m.id === customizedMeal.id ? customizedMeal : m);
       updateCurrentPlateState(updated);
     } else {
-      // Add new
       updateCurrentPlateState([...currentPlate, customizedMeal]);
     }
     setEditingMeal(null);
@@ -70,94 +80,89 @@ export default function App() {
     setCurrentView('summary');
   };
 
-  const handleEditMeal = (meal: CustomizedMeal) => {
-    setEditingMeal(meal);
-    setSelectedMealToCustomize(meal.baseItem);
-  };
-
   const handleRemoveMeal = (mealId: string) => {
     const updated = currentPlate.filter(m => m.id !== mealId);
     updateCurrentPlateState(updated);
   };
 
-  const handleClearPlate = () => {
-    updateCurrentPlateState([]);
-  };
-
-  // 5. Favorites Storage Managers
-  const handleSaveFavorite = (name: string) => {
-    const newFavorite: SavedPlate = {
-      id: Math.random().toString(36).substring(2, 9),
-      name,
-      meals: [...currentPlate],
-      createdAt: new Date().toISOString()
-    };
-    const updated = [newFavorite, ...savedFavorites];
-    setSavedFavorites(updated);
-    try {
-      localStorage.setItem('bitedecide_favorites', JSON.stringify(updated));
-    } catch (e) {
-      console.error('Failed to save favorites:', e);
-    }
-  };
-
-  const handleLoadFavorite = (favorite: SavedPlate) => {
-    // Overwrite current plate with the favorite combo meals, generating fresh IDs to avoid duplicate key issues
-    const refreshedMeals = favorite.meals.map(m => ({
-      ...m,
-      id: Math.random().toString(36).substring(2, 9)
-    }));
-    updateCurrentPlateState(refreshedMeals);
-  };
-
-  const handleDeleteFavorite = (id: string) => {
-    const updated = savedFavorites.filter(f => f.id !== id);
-    setSavedFavorites(updated);
-    try {
-      localStorage.setItem('bitedecide_favorites', JSON.stringify(updated));
-    } catch (e) {
-      console.error('Failed to delete favorite:', e);
-    }
-  };
-
-  // Add random meal directly to plate (bypass customized screen)
   const handleAddRandomMealToPlate = (meal: CustomizedMeal) => {
     updateCurrentPlateState([...currentPlate, meal]);
     setCurrentView('summary');
   };
 
-  // Filter food options shown under the active period tab
+  const handleFinishOrder = async () => {
+    if (!sessionUser) {
+      setIsFinishingOrder(true);
+      setIsAuthModalOpen(true);
+      return;
+    }
+    await savePlateToSupabase();
+  };
+
+  const savePlateToSupabase = async () => {
+    try {
+      const plateName = `Order on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+      const { error } = await supabase.from('saved_plates').insert({
+        user_id: sessionUser?.id,
+        name: plateName,
+        meals: currentPlate
+      });
+      
+      if (error) throw error;
+      
+      updateCurrentPlateState([]);
+      setCurrentView('history');
+      setIsFinishingOrder(false);
+    } catch (err: any) {
+      alert("Failed to save order: " + err.message);
+    }
+  };
+
+  const handleLoginSuccess = () => {
+    if (isFinishingOrder) {
+      savePlateToSupabase();
+    }
+  };
+
   const filteredFoodItems = FOOD_ITEMS.filter((item) => item.category === activePeriod);
 
   return (
     <div id="personal-food-selector-app" className="min-h-screen text-zinc-100 flex flex-col font-sans relative overflow-hidden">
-      {/* Ambient Orbs for dark mode alive feel */}
-      
-      
-
-      {/* Kiosk Navigation Header */}
       <KioskHeader
         activePeriod={activePeriod}
         onPeriodChange={(p) => setActivePeriod(p)}
         onOpenRandomizer={() => setIsRandomizerOpen(true)}
         cartItemCount={currentPlate.length}
         onViewPlate={() => setCurrentView('summary')}
+        onViewHistory={() => {
+          if (!sessionUser) {
+            setIsFinishingOrder(false);
+            setIsAuthModalOpen(true);
+          } else {
+            setCurrentView('history');
+          }
+        }}
+        sessionUser={sessionUser}
+        onLogout={() => supabase.auth.signOut()}
       />
 
-      {/* Main Body */}
       <main id="kiosk-main-content" className="flex-1 w-full max-w-none px-6 sm:px-10 lg:px-16 py-8 relative z-10">
         <AnimatePresence mode="wait">
-          {currentView === 'summary' ? (
+          {currentView === 'history' ? (
+             <motion.div key="history-view" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
+               <HistoryView onBackToMenu={() => setCurrentView('menu')} />
+             </motion.div>
+          ) : currentView === 'summary' ? (
             <motion.div key="summary-view" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
               <OrderSummaryView 
                 cartItems={currentPlate} 
                 onBackToMenu={() => setCurrentView('menu')} 
                 onRemoveItem={handleRemoveMeal}
+                onFinishOrder={handleFinishOrder}
               />
             </motion.div>
           ) : (
             <motion.div key="menu-view" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-8">
-                {/* Quick Helper Banner */}
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -184,7 +189,6 @@ export default function App() {
                   </div>
                 </motion.div>
 
-                {/* Menu Grid */}
                 <MenuGrid
                   items={filteredFoodItems}
                   onSelectMeal={(meal) => {
@@ -193,7 +197,6 @@ export default function App() {
                   }}
                 />
 
-                {/* General Customization Guidelines Disclaimer */}
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -213,7 +216,6 @@ export default function App() {
         </AnimatePresence>
       </main>
 
-      {/* Step Customizer sliding Drawer Modal */}
       {selectedMealToCustomize && (
         <CustomizerModal
           meal={selectedMealToCustomize}
@@ -226,12 +228,17 @@ export default function App() {
         />
       )}
 
-      {/* Roll The Dice Randomizer Modal Overlay */}
       <MealRandomizer
         isOpen={isRandomizerOpen}
         onClose={() => setIsRandomizerOpen(false)}
         activePeriod={activePeriod}
         onAddRandomMealToPlate={handleAddRandomMealToPlate}
+      />
+
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+        onLoginSuccess={handleLoginSuccess}
       />
     </div>
   );

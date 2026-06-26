@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { Clock, Sun, Sunrise, Sunset, Moon, Sparkles } from 'lucide-react';
+import { Clock, Sun, Sunrise, Sunset, Moon, Sparkles, History, LogOut, User } from 'lucide-react';
 import { MealPeriod } from '../types';
 
 interface KioskHeaderProps {
@@ -9,6 +9,9 @@ interface KioskHeaderProps {
   onOpenRandomizer: () => void;
   cartItemCount: number;
   onViewPlate: () => void;
+  onViewHistory?: () => void;
+  sessionUser?: any;
+  onLogout?: () => void;
 }
 
 export default function KioskHeader({
@@ -16,7 +19,10 @@ export default function KioskHeader({
   onPeriodChange,
   onOpenRandomizer,
   cartItemCount,
-  onViewPlate
+  onViewPlate,
+  onViewHistory,
+  sessionUser,
+  onLogout
 }: KioskHeaderProps) {
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
 
@@ -108,11 +114,32 @@ export default function KioskHeader({
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={onOpenRandomizer}
-              className="flex items-center gap-2 px-5 py-3 bg-zinc-800/80 hover:bg-zinc-700/80 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-xl transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-transform border border-white/10"
+              className="flex items-center gap-2 px-5 py-3 bg-zinc-800/80 hover:bg-zinc-700/80 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-xl transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] border border-white/10"
             >
               <Sparkles className="w-4 h-4 text-emerald-400 animate-pulse" />
-              <span>Surprise Me! 🎲</span>
+              <span className="hidden sm:inline">Surprise Me! 🎲</span>
+              <span className="sm:hidden">🎲</span>
             </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={onViewHistory}
+              className="flex items-center gap-2 px-4 py-3 bg-zinc-800/80 hover:bg-zinc-700/80 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-xl transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] border border-white/10"
+            >
+              <History className="w-4 h-4 text-emerald-400" />
+              <span className="hidden md:inline">History</span>
+            </motion.button>
+            {sessionUser && onLogout && (
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={onLogout}
+                className="flex items-center gap-2 px-4 py-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 font-bold text-xs uppercase tracking-wider rounded-2xl shadow-xl transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] border border-red-500/20"
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="hidden md:inline">Log Out</span>
+              </motion.button>
+            )}
           </div>
         </div>
 
