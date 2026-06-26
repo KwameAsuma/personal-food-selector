@@ -32,6 +32,7 @@ export default function App() {
   const [sessionUser, setSessionUser] = useState<any>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isFinishingOrder, setIsFinishingOrder] = useState(false);
+  const [pendingView, setPendingView] = useState<'summary' | 'history' | null>(null);
 
   // Check auth
   useEffect(() => {
@@ -121,6 +122,10 @@ export default function App() {
   const handleLoginSuccess = () => {
     if (isFinishingOrder) {
       savePlateToSupabase();
+      setIsFinishingOrder(false);
+    } else if (pendingView) {
+      setCurrentView(pendingView);
+      setPendingView(null);
     }
   };
 
@@ -133,9 +138,18 @@ export default function App() {
         onPeriodChange={(p) => setActivePeriod(p)}
         onOpenRandomizer={() => setIsRandomizerOpen(true)}
         cartItemCount={currentPlate.length}
-        onViewPlate={() => setCurrentView('summary')}
+        onViewPlate={() => {
+          if (!sessionUser) {
+            setPendingView('summary');
+            setIsFinishingOrder(false);
+            setIsAuthModalOpen(true);
+          } else {
+            setCurrentView('summary');
+          }
+        }}
         onViewHistory={() => {
           if (!sessionUser) {
+            setPendingView('history');
             setIsFinishingOrder(false);
             setIsAuthModalOpen(true);
           } else {
