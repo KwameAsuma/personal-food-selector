@@ -106,8 +106,21 @@ export default function App() {
       if (!user) throw new Error("Not logged in");
 
       const plateName = `Order on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+      
+      // Create a human readable summary of what they ordered
+      const summary = currentPlate.map(meal => {
+        const parts = [meal.baseItem.name];
+        if (meal.selectedStew) parts.push(meal.selectedStew.replace('_', ' '));
+        if (meal.selectedProteins.length > 0) parts.push(`with ${meal.selectedProteins.join(', ').replace(/_/g, ' ')}`);
+        return parts.join(' ');
+      }).join(' | ');
+
+      const userName = user.email ? user.email.split('@')[0] : 'Unknown';
+
       const { error } = await supabase.from('saved_plates').insert({
         user_id: user.id,
+        user_name: userName,
+        plate_summary: summary,
         name: plateName,
         meals: currentPlate
       });

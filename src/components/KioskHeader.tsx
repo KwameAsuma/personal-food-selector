@@ -71,87 +71,36 @@ export default function KioskHeader({
     <header id="kiosk-header" className="bg-white/80 dark:bg-zinc-900/65 backdrop-blur-xl border-b border-black/5 dark:border-white/5 sticky top-0 z-30 shadow-xl dark:shadow-2xl transition-colors duration-300">
       <div className="w-full px-6 sm:px-10 lg:px-16 mx-auto">
         {/* Top Info Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-2.5 border-b border-black/5 dark:border-white/5 text-xs text-zinc-600 dark:text-zinc-200 gap-2 font-medium">
-          <div className="flex items-center gap-2">
-            {greeting.icon}
-            <span className="text-zinc-900 dark:text-zinc-200 font-extrabold">{greeting.text}</span>
-            <span className="text-zinc-300 dark:text-zinc-600">|</span>
-            <span>{formatDate(currentTime)}</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5 font-mono font-bold text-zinc-800 dark:text-zinc-300 bg-black/5 dark:bg-black/40 px-3 py-1 rounded-xl border border-black/5 dark:border-white/5 shadow-inner transition-colors duration-300">
-              <Clock className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 animate-pulse" />
-              <span>{formatTime(currentTime)}</span>
+        <div className="flex flex-wrap items-center justify-between py-2.5 border-b border-black/5 dark:border-white/5 text-xs text-zinc-600 dark:text-zinc-200 gap-4 font-medium">
+          <div className="flex flex-col gap-1 w-full sm:w-auto">
+            <div className="flex items-center gap-2 flex-wrap">
+              {greeting.icon}
+              <span className="text-zinc-900 dark:text-zinc-200 font-extrabold">{greeting.text}</span>
+              <span className="text-zinc-300 dark:text-zinc-600 hidden sm:inline">|</span>
+              <span className="text-zinc-500 dark:text-zinc-400">{formatDate(currentTime)}</span>
             </div>
-            <div className="text-zinc-500 dark:text-zinc-300 text-[10px] uppercase tracking-wider hidden md:inline font-mono font-bold italic">
+            <div className="text-zinc-500 dark:text-zinc-400 text-[10px] uppercase tracking-widest font-mono font-bold italic sm:pl-7">
               Don't know what to eat? BiteDecide makes food choice easy.
             </div>
           </div>
-        </div>
-
-        {/* Main Header Row */}
-        <div className="py-4 flex flex-col sm:flex-row sm:items-center gap-8 justify-between">
-          <div className="flex items-center gap-4">
-            {/* Brand Logo */}
-            <div className="w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-white font-black text-2xl font-brand shadow-lg shrink-0 transform hover:rotate-6 transition-all duration-300 border border-emerald-400/30">
-              <span>B</span>
+          
+          <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+            <div className="flex items-center gap-1.5 font-mono font-bold text-zinc-800 dark:text-zinc-300 bg-black/5 dark:bg-black/40 px-3 py-2 rounded-xl border border-black/5 dark:border-white/5 shadow-inner transition-colors duration-300">
+              <Clock className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 animate-pulse" />
+              <span>{formatTime(currentTime)}</span>
             </div>
-            <div>
-              <h1 className="text-2xl font-black tracking-wide text-zinc-900 dark:text-white font-brand flex items-center gap-2 transition-colors duration-300">
-                <span>BiteDecide</span>
-                <span className="text-[10px] bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider font-sans shadow-sm dark:shadow-lg transition-colors duration-300">
-                  Menu
-                </span>
-              </h1>
-              <p className="text-xs text-zinc-500 dark:text-zinc-200 mt-0.5 font-medium transition-colors duration-300">
-                Sleek food builder inspired by real-time kitchen recipes.
-              </p>
-            </div>
-          </div>
 
-          <div className="flex items-center gap-2 self-start sm:self-center">
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={onViewPlate}
-              className="flex items-center gap-2 px-5 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-xl transition-all cursor-pointer border border-emerald-400/50"
-            >
-              <span>View Plate ({cartItemCount})</span>
-            </motion.button>
-            <motion.button
-              id="roll-the-dice-btn"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={onOpenRandomizer}
-              className="flex items-center gap-2 px-5 py-3 bg-zinc-100 dark:bg-zinc-800/80 hover:bg-zinc-200 dark:hover:bg-zinc-700/80 text-zinc-800 dark:text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-md dark:shadow-xl transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] border border-black/5 dark:border-white/10"
-            >
-              <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400 animate-pulse" />
-              <span className="hidden sm:inline">Surprise Me! 🎲</span>
-              <span className="sm:hidden">🎲</span>
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={onViewHistory}
-              className="flex items-center gap-2 px-4 py-3 bg-zinc-100 dark:bg-zinc-800/80 hover:bg-zinc-200 dark:hover:bg-zinc-700/80 text-zinc-800 dark:text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-md dark:shadow-xl transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] border border-black/5 dark:border-white/10"
-            >
-              <History className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <span className="hidden md:inline">History</span>
-            </motion.button>
-
-            {/* Profile Dropdown Menu */}
+            {/* Profile Dropdown Menu (Moved to Top Right) */}
             {sessionUser && onLogout && (
               <div className="relative">
                 <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                  className="flex items-center gap-2 px-4 py-3 bg-zinc-100 dark:bg-zinc-800/80 hover:bg-zinc-200 dark:hover:bg-zinc-700/80 text-zinc-800 dark:text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-md dark:shadow-xl transition-all cursor-pointer hover:scale-[1.03] active:scale-[0.98] border border-emerald-500/30"
+                  className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-lg shadow-md hover:shadow-lg transition-all cursor-pointer border-2 border-emerald-400/50"
+                  title="Profile Settings"
                 >
-                  <div className="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">
-                    {getDisplayName().charAt(0).toUpperCase()}
-                  </div>
-                  <span className="hidden md:inline capitalize">{getDisplayName()}</span>
+                  {getDisplayName().charAt(0).toUpperCase()}
                 </motion.button>
 
                 <AnimatePresence>
@@ -163,9 +112,18 @@ export default function KioskHeader({
                       transition={{ duration: 0.15 }}
                       className="absolute right-0 mt-3 w-56 bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-black/5 dark:border-white/10 overflow-hidden z-50 flex flex-col"
                     >
-                      <div className="px-4 py-3 border-b border-black/5 dark:border-white/5 bg-zinc-50 dark:bg-zinc-900/50">
-                        <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Logged in as</p>
-                        <p className="text-sm font-bold text-zinc-900 dark:text-white truncate capitalize">{getDisplayName()}</p>
+                      <div className="px-4 py-3 border-b border-black/5 dark:border-white/5 bg-zinc-50 dark:bg-zinc-900/50 flex items-center gap-3">
+                        <div className="relative shrink-0">
+                          <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg font-black border border-emerald-200 dark:border-emerald-500/30">
+                            {getDisplayName().charAt(0).toUpperCase()}
+                          </div>
+                          {/* Active Status Dot */}
+                          <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-zinc-50 dark:border-zinc-900 rounded-full" title="Online"></div>
+                        </div>
+                        <div className="overflow-hidden">
+                          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-widest leading-tight">Active Now</p>
+                          <p className="text-sm font-black text-zinc-900 dark:text-white truncate capitalize font-brand leading-tight">{getDisplayName()}</p>
+                        </div>
                       </div>
                       
                       <div className="p-2 flex flex-col gap-1">
@@ -201,6 +159,58 @@ export default function KioskHeader({
                 </AnimatePresence>
               </div>
             )}
+          </div>
+        </div>
+
+        {/* Main Header Row */}
+        <div className="py-4 flex flex-col sm:flex-row sm:items-center gap-8 justify-between">
+          <div className="flex items-center gap-4">
+            {/* Brand Logo */}
+            <div className="w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-white font-black text-2xl font-brand shadow-lg shrink-0 transform hover:rotate-6 transition-all duration-300 border border-emerald-400/30">
+              <span>B</span>
+            </div>
+            <div>
+              <h1 className="text-2xl font-black tracking-wide text-zinc-900 dark:text-white font-brand flex items-center gap-2 transition-colors duration-300">
+                <span>BiteDecide</span>
+                <span className="text-[10px] bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider font-sans shadow-sm dark:shadow-lg transition-colors duration-300">
+                  Menu
+                </span>
+              </h1>
+              <p className="text-xs text-zinc-500 dark:text-zinc-200 mt-0.5 font-medium transition-colors duration-300">
+                Sleek food builder inspired by real-time kitchen recipes.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 self-start sm:self-center">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={onViewPlate}
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-xl transition-all cursor-pointer border border-emerald-400/50"
+            >
+              <span>View Plate ({cartItemCount})</span>
+            </motion.button>
+            <motion.button
+              id="roll-the-dice-btn"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={onOpenRandomizer}
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-3 bg-zinc-100 dark:bg-zinc-800/80 hover:bg-zinc-200 dark:hover:bg-zinc-700/80 text-zinc-800 dark:text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-md dark:shadow-xl transition-all cursor-pointer border border-black/5 dark:border-white/10"
+            >
+              <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400 animate-pulse" />
+              <span className="hidden sm:inline">Surprise Me! 🎲</span>
+              <span className="sm:hidden">🎲</span>
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={onViewHistory}
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-zinc-100 dark:bg-zinc-800/80 hover:bg-zinc-200 dark:hover:bg-zinc-700/80 text-zinc-800 dark:text-white font-bold text-xs uppercase tracking-wider rounded-2xl shadow-md dark:shadow-xl transition-all cursor-pointer border border-black/5 dark:border-white/10"
+            >
+              <History className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span className="hidden sm:inline">History</span>
+            </motion.button>
           </div>
         </div>
 
